@@ -19,23 +19,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.club.padel.constant.ClubPadelConstant;
-import com.club.padel.model.Roles;
-import com.club.padel.service.RolesService;
+import com.club.padel.model.Rol;
+import com.club.padel.service.RolService;
 import com.club.padel.service.util.ClubPadelUtil;
 import com.club.padel.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping(ClubPadelConstant.APP_PREFIX+"/roles")
-public class RolesController {
+public class RolController {
 	// TODO: Añadir control de excepciones
-	static final Logger log = LoggerFactory.getLogger(RolesController.class);
+	static final Logger log = LoggerFactory.getLogger(RolController.class);
 	
 	@Autowired
 	private MessageSource mensajes;
 	
     @Autowired
-    RolesService rolesService;
+    RolService rolesService;
     
     @GetMapping("/test")
     public  ResponseEntity<String> test() {
@@ -44,31 +44,31 @@ public class RolesController {
     
     @GetMapping("")
     @JsonView(View.Basic.class)
-    public List<Roles> list() {
+    public List<Rol> list() {
     	log.debug("List");
         return rolesService.listAll();
     }
 
     @GetMapping("/{id}")
     @JsonView(View.Extended.class)
-    public ResponseEntity<Roles> get(@PathVariable Integer id) {
+    public ResponseEntity<Rol> get(@PathVariable Integer id) {
         try {
-            Roles rol = rolesService.getRoles(id);
-            return new ResponseEntity<Roles>(rol, HttpStatus.OK);
+            Rol rol = rolesService.getRoles(id);
+            return new ResponseEntity<Rol>(rol, HttpStatus.OK);
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<Roles>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Rol>(HttpStatus.NOT_FOUND);
         }
     }
     
     @PostMapping("/")
     @JsonView(View.Basic.class)
-    public Roles add(@RequestBody Roles rol) {
+    public Rol add(@RequestBody Rol rol) {
     	return rolesService.saveRoles(rol);
     }
     
     @PutMapping("/{id}")
     @JsonView(View.Basic.class)
-    public ResponseEntity<?> update(@RequestBody Roles rol, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody Rol rol, @PathVariable Integer id) {
         try {
             rol.setId(id);
             rolesService.saveRoles(rol);

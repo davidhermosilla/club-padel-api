@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		name="roles_unique_key",
         columnNames = {"rol_type"})
 	})
-public class Roles {
+public class Rol {
 	
 	@Id
 	@Column(name = "rol_id", unique = true, nullable = false)
@@ -33,10 +33,10 @@ public class Roles {
     private String rolType;
     
 
-    public Roles() {
+    public Rol() {
     }
 
-    public Roles(int id, String firstName, String lastName) {
+    public Rol(int id, String firstName, String lastName) {
         this.id = id;
 
     }
@@ -60,12 +60,12 @@ public class Roles {
  
         /* Check if o is an instance of Complex or not
           "null instanceof [type]" also returns false */
-        if (!(o instanceof Roles)) {
+        if (!(o instanceof Rol)) {
             return false;
         }
          
         // typecast o to Complex so that we can compare data members
-        Roles Roles = (Roles) o;
+        Rol Roles = (Rol) o;
          
         // Compare the data members and return accordingly
         return Roles.compare(this,Roles);
@@ -78,7 +78,7 @@ public class Roles {
         return hash;
     }    
 
-	private static boolean compare(Roles role, Roles role2) {
+	private static boolean compare(Rol role, Rol role2) {
 		if ( role!=null && role2!=null &&
 			    role!=null &&  role.getRolType().equals(role2.getRolType())) 
 			 {
