@@ -23,8 +23,8 @@ public class RolesService {
         return rolesRepository.findAll();
     }
 
-    public Roles saveRoles(Roles user) {
-        return rolesRepository.save(user);
+    public Roles saveRoles(Roles role) {
+        return rolesRepository.save(role);
     }
 
     public Roles getRoles(Integer id) {

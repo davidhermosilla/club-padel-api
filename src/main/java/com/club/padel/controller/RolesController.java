@@ -53,8 +53,8 @@ public class RolesController {
     @JsonView(View.Extended.class)
     public ResponseEntity<Roles> get(@PathVariable Integer id) {
         try {
-            Roles user = rolesService.getRoles(id);
-            return new ResponseEntity<Roles>(user, HttpStatus.OK);
+            Roles rol = rolesService.getRoles(id);
+            return new ResponseEntity<Roles>(rol, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<Roles>(HttpStatus.NOT_FOUND);
         }
@@ -62,16 +62,16 @@ public class RolesController {
     
     @PostMapping("/")
     @JsonView(View.Basic.class)
-    public Roles add(@RequestBody Roles user) {
-    	return rolesService.saveRoles(user);
+    public Roles add(@RequestBody Roles rol) {
+    	return rolesService.saveRoles(rol);
     }
     
     @PutMapping("/{id}")
     @JsonView(View.Basic.class)
-    public ResponseEntity<?> update(@RequestBody Roles user, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody Roles rol, @PathVariable Integer id) {
         try {
-            user.setId(id);
-            rolesService.saveRoles(user);
+            rol.setId(id);
+            rolesService.saveRoles(rol);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

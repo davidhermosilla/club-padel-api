@@ -48,7 +48,7 @@ public class ClubPadelConfig implements WebMvcConfigurer{
 	public Docket apiDocket() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.apptrainer.controller")) //$NON-NLS-1$
+				.apis(RequestHandlerSelectors.basePackage("com.club.padel.controller")) //$NON-NLS-1$
 				.paths(PathSelectors.any())
 				.build().apiInfo(getApiInfo())
 				;
