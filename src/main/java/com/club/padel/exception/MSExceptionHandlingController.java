@@ -18,23 +18,6 @@ public abstract class MSExceptionHandlingController extends DefaultHandlerExcept
 
     public static final Logger ERROR_LOG = LoggerFactory.getLogger(MSExceptionHandlingController.class);
     
-    @ExceptionHandler(ClubPadelException.class)
-    public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
-//      HttpMSServletResponseWrapper responseWrapper = new HttpMSServletResponseWrapper(response);
-//      MSError obtMainError = new MSError(getGenericExceptionPropertyMessage(locale));
-//      responseWrapper.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-//
-//      this.doResolveException(request, responseWrapper, this, ex);
-//
-//      if (responseWrapper.getStatus() != HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-//          obtMainError = new MSError(String.valueOf(responseWrapper.getStatus()), ex.getMessage());
-//      }
-      
-      final MSError msErrorResponse = new MSError(ex.getErrorCode(),ex.getMessage());
-      ERROR_LOG.error(msErrorResponse.getMessage(), ex);
-      return new ResponseEntity<MSError>(msErrorResponse, HttpStatus.valueOf(ex.getStatus()));
-  }    
-    
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MSError> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
 //        HttpMSServletResponseWrapper responseWrapper = new HttpMSServletResponseWrapper(response);
