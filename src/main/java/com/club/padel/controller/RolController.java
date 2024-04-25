@@ -64,7 +64,7 @@ public class RolController {
     
     @PostMapping("/")
     @JsonView(View.Basic.class)
-    public Rol add(@RequestBody Rol rol) {
+    public Rol add(@RequestBody Rol rol) throws ClubPadelException {
     	try {
     		return rolesService.saveRoles(rol);
     	} catch (Exception e) {
