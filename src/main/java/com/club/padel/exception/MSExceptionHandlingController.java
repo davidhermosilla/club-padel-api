@@ -21,29 +21,26 @@ public abstract class MSExceptionHandlingController extends DefaultHandlerExcept
     public static final Logger ERROR_LOG = LoggerFactory.getLogger(MSExceptionHandlingController.class);
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<MSErrorResponse> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
-        HttpMSServletResponseWrapper responseWrapper = new HttpMSServletResponseWrapper(response);
+    public ResponseEntity<MSError> handleExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
+//        HttpMSServletResponseWrapper responseWrapper = new HttpMSServletResponseWrapper(response);
         MSError obtMainError = new MSError(getGenericExceptionPropertyMessage(locale));
-        responseWrapper.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-
-        this.doResolveException(request, responseWrapper, this, ex);
-
-        if (responseWrapper.getStatus() != HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            obtMainError = new MSError(String.valueOf(responseWrapper.getStatus()), ex.getMessage());
-        }
-
-        final MSErrorResponse msErrorResponse = new MSErrorResponse();
-        msErrorResponse.setError(obtMainError);
+//        responseWrapper.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+//
+//        this.doResolveException(request, responseWrapper, this, ex);
+//
+//        if (responseWrapper.getStatus() != HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+//            obtMainError = new MSError(String.valueOf(responseWrapper.getStatus()), ex.getMessage());
+//        }
+        
+        final MSError msErrorResponse = new MSError("CLUB01",ex.getMessage());
         ERROR_LOG.error(obtMainError.getMessage(), ex);
-        return new ResponseEntity<MSErrorResponse>(msErrorResponse, HttpStatus.valueOf(response.getStatus()));
+        return new ResponseEntity<MSError>(msErrorResponse, HttpStatus.valueOf(response.getStatus()));
     }
 
     public ResponseEntity handleSpecificException (String propertyMessage, MSGeneralException ex) {
-        final MSErrorResponse response = new MSErrorResponse();
-        final MSError obtMainError = new MSError(propertyMessage);
-        response.setError(obtMainError);
-        ERROR_LOG.error(obtMainError.getMessage(), ex);
-        return new ResponseEntity<MSErrorResponse>(response, HttpStatus.valueOf(ex.getStatus()));
+        final MSError response = new MSError(propertyMessage);
+        ERROR_LOG.error(response.getMessage(), ex);
+        return new ResponseEntity<MSError>(response, HttpStatus.valueOf(ex.getStatus()));
     }
 
     public abstract String getGenericExceptionPropertyMessage(Locale locale);
