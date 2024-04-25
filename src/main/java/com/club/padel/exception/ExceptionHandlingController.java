@@ -13,12 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 import com.club.padel.exception.model.MSError;
 
 
 @ControllerAdvice
-public class ExceptionHandlingController extends MSExceptionHandlingController {
+public class ExceptionHandlingController extends DefaultHandlerExceptionResolver	 {
 
 	 public static final Logger ERROR_LOG = LoggerFactory.getLogger(ExceptionHandlingController.class);
 	    
@@ -30,20 +31,14 @@ public class ExceptionHandlingController extends MSExceptionHandlingController {
         this.messageSource = messageSource;
     }
     
-    @ExceptionHandler(value = {Exception.class, ClubPadelException.class})
+    @ExceptionHandler(value = {ClubPadelException.class})
     public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
         
         final MSError responseException = new MSError(ex.getErrorCode(),ex.getMessage());
         ERROR_LOG.info("MSErrorResponse-code:"+responseException.getCode());
         ERROR_LOG.info("MSErrorResponse-message:"+responseException.getMessage());
        
-        return new ResponseEntity<MSError>(responseException, HttpStatus.valueOf(ex.getStatus()));
+        return new ResponseEntity<MSError>(responseException, ex.getStatus());
     }
-
-    @Override
-    public String getGenericExceptionPropertyMessage(Locale locale) {
-        return messageSource.getMessage(ExceptionErrorDetail.EXCEPTION_UNEXPECTED.value(), null, locale);
-    }
-
 
 }
