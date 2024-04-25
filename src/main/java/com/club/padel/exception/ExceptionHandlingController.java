@@ -30,7 +30,7 @@ public class ExceptionHandlingController extends MSExceptionHandlingController {
         this.messageSource = messageSource;
     }
     
-    @ExceptionHandler(ClubPadelException.class)
+    @ExceptionHandler(value = {Exception.class, ClubPadelException.class})
     public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
         
         final MSError responseException = new MSError(ex.getErrorCode(),ex.getMessage());
