@@ -21,7 +21,7 @@ public abstract class MSExceptionHandlingController extends DefaultHandlerExcept
     @ExceptionHandler(ClubPadelException.class)
     public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
 //      HttpMSServletResponseWrapper responseWrapper = new HttpMSServletResponseWrapper(response);
-      MSError obtMainError = new MSError(getGenericExceptionPropertyMessage(locale));
+//      MSError obtMainError = new MSError(getGenericExceptionPropertyMessage(locale));
 //      responseWrapper.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 //
 //      this.doResolveException(request, responseWrapper, this, ex);
@@ -31,7 +31,7 @@ public abstract class MSExceptionHandlingController extends DefaultHandlerExcept
 //      }
       
       final MSError msErrorResponse = new MSError(ex.getErrorCode(),ex.getMessage());
-      ERROR_LOG.error(obtMainError.getMessage(), ex);
+      ERROR_LOG.error(msErrorResponse.getMessage(), ex);
       return new ResponseEntity<MSError>(msErrorResponse, HttpStatus.valueOf(ex.getStatus()));
   }    
     
@@ -50,12 +50,6 @@ public abstract class MSExceptionHandlingController extends DefaultHandlerExcept
         final MSError msErrorResponse = new MSError("CLUB01",ex.getMessage());
         ERROR_LOG.error(obtMainError.getMessage(), ex);
         return new ResponseEntity<MSError>(msErrorResponse, HttpStatus.valueOf(response.getStatus()));
-    }
-
-    public ResponseEntity handleSpecificException (String propertyMessage, MSGeneralException ex) {
-        final MSError response = new MSError(propertyMessage);
-        ERROR_LOG.error(response.getMessage(), ex);
-        return new ResponseEntity<MSError>(response, HttpStatus.valueOf(ex.getStatus()));
     }
 
     public abstract String getGenericExceptionPropertyMessage(Locale locale);
