@@ -26,7 +26,6 @@ import com.club.padel.service.RolService;
 import com.club.padel.service.util.ClubPadelUtil;
 import com.club.padel.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.hpe.nfvd.container.exception.ContainerException;
 
 @RestController
 @RequestMapping(ClubPadelConstant.APP_PREFIX+"/roles")
