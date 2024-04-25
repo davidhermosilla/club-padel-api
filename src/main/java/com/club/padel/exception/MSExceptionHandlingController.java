@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
-import com.club.padel.exception.model.HttpMSServletResponseWrapper;
 import com.club.padel.exception.model.MSError;
-import com.club.padel.exception.model.MSErrorResponse;
 
 public abstract class MSExceptionHandlingController extends DefaultHandlerExceptionResolver {
 
