@@ -2,6 +2,9 @@ package com.club.padel.exception;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +31,13 @@ public class ExceptionHandlingController extends MSExceptionHandlingController {
     }
     
     @ExceptionHandler(ClubPadelException.class)
-    public ResponseEntity<MSError> resourceObtApiService(ClubPadelException ex, Locale locale) {
+    public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
         
-        final MSError response = new MSError(ex.getErrorCode(),ex.getMessage());
-        ERROR_LOG.info("MSErrorResponse-code:"+response.getCode());
-        ERROR_LOG.info("MSErrorResponse-message:"+response.getMessage());
+        final MSError responseException = new MSError(ex.getErrorCode(),ex.getMessage());
+        ERROR_LOG.info("MSErrorResponse-code:"+responseException.getCode());
+        ERROR_LOG.info("MSErrorResponse-message:"+responseException.getMessage());
        
-        return new ResponseEntity<MSError>(response, HttpStatus.valueOf(ex.getStatus()));
+        return new ResponseEntity<MSError>(responseException, HttpStatus.valueOf(ex.getStatus()));
     }
 
     @Override
