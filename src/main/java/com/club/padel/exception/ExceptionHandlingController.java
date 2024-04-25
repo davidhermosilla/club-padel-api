@@ -40,9 +40,9 @@ public class ExceptionHandlingController extends MSExceptionHandlingController {
         ERROR_LOG.info("ExceptionValue-propertyMessage:"+propertyMessageCode);
         
         final MSErrorResponse response = new MSErrorResponse();
-        final MSError obtMainError = new MSError(propertyMessageCode,propertyMessage);
+        final MSError obtMainError = new MSError(propertyMessageCode!=null?propertyMessageCode:"CLUB01",propertyMessage!=null?propertyMessageCode:ex.getMessage());
         response.setError(obtMainError);
-        response.setMessages(new ArrayList<>());
+        
         ERROR_LOG.info("MSErrorResponse-code:"+response.getError().getCode());
         ERROR_LOG.info("MSErrorResponse-message:"+response.getError().getMessage());
        

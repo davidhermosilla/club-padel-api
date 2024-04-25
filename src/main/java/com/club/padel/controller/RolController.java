@@ -68,7 +68,7 @@ public class RolController {
     	try {
     		return rolesService.saveRoles(rol);
     	} catch (Exception e) {
-    		throw new ClubPadelException(HttpStatus.NOT_FOUND, ExceptionErrorDetail.EXCEPTION_UNEXPECTED, e.getMessage());
+    		throw new ClubPadelException(HttpStatus.INTERNAL_SERVER_ERROR, ExceptionErrorDetail.EXCEPTION_UNEXPECTED, e.getMessage());
         }
     }
     
