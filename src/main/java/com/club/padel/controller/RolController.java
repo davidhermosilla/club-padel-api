@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.club.padel.constant.ClubPadelConstant;
+import com.club.padel.exception.ClubPadelException;
+import com.club.padel.exception.ExceptionErrorDetail;
 import com.club.padel.model.Rol;
 import com.club.padel.service.RolService;
 import com.club.padel.service.util.ClubPadelUtil;
 import com.club.padel.view.View;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.hpe.nfvd.container.exception.ContainerException;
 
 @RestController
 @RequestMapping(ClubPadelConstant.APP_PREFIX+"/roles")
@@ -63,7 +66,11 @@ public class RolController {
     @PostMapping("/")
     @JsonView(View.Basic.class)
     public Rol add(@RequestBody Rol rol) {
-    	return rolesService.saveRoles(rol);
+    	try {
+    		return rolesService.saveRoles(rol);
+    	} catch (Exception e) {
+    		throw new ClubPadelException(HttpStatus.NOT_FOUND, ExceptionErrorDetail.EXCEPTION_UNEXPECTED, e.getMessage());
+        }
     }
     
     @PutMapping("/{id}")

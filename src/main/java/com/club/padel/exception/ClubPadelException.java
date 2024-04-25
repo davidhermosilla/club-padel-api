@@ -1,9 +1,15 @@
 package com.club.padel.exception;
 
-public class ClubPadelException extends Exception {
+import org.springframework.http.HttpStatus;
 
-	public ClubPadelException(String message) {
-		super(message);
+public class ClubPadelException extends MSGeneralException {
+
+	private static final long serialVersionUID = 1L;
+
+	public ClubPadelException(HttpStatus httpStatus, ExceptionErrorDetail ex, String... params) {
+		setStatus(httpStatus.value());
+		setErrorCode(ex.value());
+		setArgs(params);
 	}
 
 }
