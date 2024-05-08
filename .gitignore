@@ -34,3 +34,4 @@ build/
 /app.log
 /target
 /app.log.*.gz
+/data

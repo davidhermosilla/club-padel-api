@@ -41,13 +41,14 @@ public class RolController {
     
     @GetMapping("/test")
     public  ResponseEntity<String> test() {
+    	log.info("Entrando en el metodo de test");
     	return new ResponseEntity<String>(ClubPadelUtil.getString(mensajes,"language.test"), HttpStatus.OK);
     }    
     
     @GetMapping("")
     @JsonView(View.Basic.class)
     public List<Rol> list() {
-    	log.debug("List");
+    	log.info("List");
         return rolesService.listAll();
     }
 
