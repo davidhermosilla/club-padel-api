@@ -8,91 +8,53 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.club.padel.view.View;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-@Table(name = "roles",uniqueConstraints =  
+@Table(name = "rol",uniqueConstraints =  
 	{@UniqueConstraint(
 		name="roles_unique_key",
-        columnNames = {"rol_type"})
+        columnNames = {"nombre","dias_antelacion"})
 	})
 public class Rol {
-	
-	@Id
-	@Column(name = "rol_id", unique = true, nullable = false)
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView({View.Basic.class})
-    private int id;
-	
-	@Column(name = "rol_type", unique = false, nullable = false)
-	@JsonView({View.Basic.class})
-    private String rolType;
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String nombre;
+
+    @Column(nullable = false, name="dias_antelacion")
+    private Integer diasAntelacion;
     
-
-    public Rol() {
-    }
-
-    public Rol(int id, String firstName, String lastName) {
-        this.id = id;
-
-    }
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    // Overriding equals() to compare two Complex objects
-    @Override
-    public boolean equals(Object o) {
- 
-        // If the object is compared with itself then return true 
-        if (o == this) {
-            return true;
-        }
- 
-        /* Check if o is an instance of Complex or not
-          "null instanceof [type]" also returns false */
-        if (!(o instanceof Rol)) {
-            return false;
-        }
-         
-        // typecast o to Complex so that we can compare data members
-        Rol Roles = (Rol) o;
-         
-        // Compare the data members and return accordingly
-        return Roles.compare(this,Roles);
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + (int) id;
-        return hash;
-    }    
-
-	private static boolean compare(Rol role, Rol role2) {
-		if ( role!=null && role2!=null &&
-			    role!=null &&  role.getRolType().equals(role2.getRolType())) 
-			 {
-			return true;
-		}
-		return false;
+	public Long getId() {
+		return id;
 	}
 
-	public String getRolType() {
-		return rolType;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setRolType(String rolType) {
-		this.rolType = rolType;
+	public String getNombre() {
+		return nombre;
 	}
 
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public Integer getDiasAntelacion() {
+		return diasAntelacion;
+	}
+
+	public void setDiasAntelacion(Integer diasAntelacion) {
+		this.diasAntelacion = diasAntelacion;
+	}
+
+	@Override
+	public String toString() {
+		return "Rol [id=" + id + ", nombre=" + nombre + ", diasAntelacion=" + diasAntelacion + "]";
+	}
 }

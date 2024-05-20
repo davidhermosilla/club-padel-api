@@ -25,7 +25,6 @@ import com.club.padel.model.Rol;
 import com.club.padel.service.RolService;
 import com.club.padel.service.util.ClubPadelUtil;
 import com.club.padel.view.View;
-import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping(ClubPadelConstant.APP_PREFIX+"/roles")
@@ -46,15 +45,15 @@ public class RolController {
     }    
     
     @GetMapping("")
-    @JsonView(View.Basic.class)
     public List<Rol> list() {
     	log.info("List");
-        return rolesService.listAll();
+    	List<Rol> list = rolesService.listAll();
+    	System.out.println(list);
+    	return list;
     }
 
     @GetMapping("/{id}")
-    @JsonView(View.Extended.class)
-    public ResponseEntity<Rol> get(@PathVariable Integer id) {
+    public ResponseEntity<Rol> get(@PathVariable Long id) {
         try {
             Rol rol = rolesService.getRoles(id);
             return new ResponseEntity<Rol>(rol, HttpStatus.OK);
@@ -64,9 +63,11 @@ public class RolController {
     }
     
     @PostMapping("/")
-    @JsonView(View.Basic.class)
-    public Rol add(@RequestBody Rol rol) throws ClubPadelException {
+    public Rol add(@RequestBody RolRequest rolRequest) throws ClubPadelException {
     	try {
+    		Rol rol = new Rol();
+    		rol.setNombre(rolRequest.getNombre());
+    		rol.setDiasAntelacion(rolRequest.getDiasAntelacion());
     		return rolesService.saveRoles(rol);
     	} catch (Exception e) {
     		throw new ClubPadelException(HttpStatus.INTERNAL_SERVER_ERROR,ExceptionErrorDetail.EXCEPTION_UNEXPECTED, e.getMessage());
@@ -74,9 +75,12 @@ public class RolController {
     }
     
     @PutMapping("/{id}")
-    @JsonView(View.Basic.class)
-    public ResponseEntity<?> update(@RequestBody Rol rol, @PathVariable Integer id) {
+    public ResponseEntity<?> update(@RequestBody RolRequest rolRequest, @PathVariable Long id) {
         try {
+        	Rol rol = new Rol();
+        	
+        	rol.setNombre(rolRequest.getNombre());
+        	rol.setDiasAntelacion(rolRequest.getDiasAntelacion());
             rol.setId(id);
             rolesService.saveRoles(rol);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -86,7 +90,7 @@ public class RolController {
     }
     
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
+    public void delete(@PathVariable Long id) {
         rolesService.deleteRoles(id);
     }
 
@@ -96,6 +100,24 @@ public class RolController {
 
 	public void setMensajes(MessageSource mensajes) {
 		this.mensajes = mensajes;
+	}
+    
+}
+
+class RolRequest {
+    private String nombre;
+    private Integer diasAntelacion;
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public Integer getDiasAntelacion() {
+		return diasAntelacion;
+	}
+	public void setDiasAntelacion(Integer diasAntelacion) {
+		this.diasAntelacion = diasAntelacion;
 	}
     
 }

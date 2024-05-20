@@ -11,7 +11,7 @@ public enum ExceptionErrorDetail {
     ERROR_EMPTY_PARAMS("emtpy.required.params"),
     TIMEOUT_EXCEPTION("timeout.exception"),
     MANDATORY_PARAM("mandatory.param"),
-    FORBIDDEN("forbidden.exception"),
+    FORBIDDEN("forbidden.exception"), NOT_FOUND("resource.not.found"),
 
 	;
 

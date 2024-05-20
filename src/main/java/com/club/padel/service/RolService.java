@@ -27,11 +27,11 @@ public class RolService {
         return rolesRepository.save(role);
     }
 
-    public Rol getRoles(Integer id) {
+    public Rol getRoles(Long id) {
         return rolesRepository.findById(id).get();
     }
 
-    public void deleteRoles(Integer id) {
+    public void deleteRoles(Long id) {
         rolesRepository.deleteById(id);
     }
     
