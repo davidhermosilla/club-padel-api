@@ -32,13 +32,24 @@ public class ExceptionHandlingController extends DefaultHandlerExceptionResolver
     }
     
     @ExceptionHandler(value = {ClubPadelException.class})
-    public ResponseEntity<MSError> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
+    public ResponseEntity<Object> handleExceptions(ClubPadelException ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
         
         final MSError responseException = new MSError(ex.getErrorCode(),ex.getMessage());
         ERROR_LOG.info("MSErrorResponse-code:"+responseException.getCode());
         ERROR_LOG.info("MSErrorResponse-message:"+responseException.getMessage());
        
-        return new ResponseEntity<MSError>(responseException, ex.getStatus());
+        return new ResponseEntity<Object>(responseException, ex.getStatus());
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    public ResponseEntity<Object> handleGeneralExceptions(Exception ex, HttpServletRequest request, HttpServletResponse response, Locale locale) {
+
+        final MSError responseException = new MSError("GENERAL_ERROR", ex.getMessage());
+        ERROR_LOG.error("MSErrorResponse-code:"+responseException.getCode());
+        ERROR_LOG.error("MSErrorResponse-message:"+responseException.getMessage());
+        ERROR_LOG.error("Request details: " + request.toString());
+
+        return new ResponseEntity<Object>(responseException, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

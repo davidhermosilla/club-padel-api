@@ -60,8 +60,7 @@ public class ReservaController {
     }
     
     @PostMapping
-    public ResponseEntity<Reserva> crearReserva(@RequestBody ReservaRequest reservaRequest) {
-        try {
+    public ResponseEntity<Reserva> crearReserva(@RequestBody ReservaRequest reservaRequest) throws Exception {
             Reserva reserva = reservaService.crearReserva(
                     reservaRequest.getUsername(),
                     reservaRequest.getPistaId(),
@@ -70,9 +69,6 @@ public class ReservaController {
                     reservaRequest.getHoraFin()
             );
             return ResponseEntity.ok(reserva);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
     }
    
     @DeleteMapping("/{reservaId}")
