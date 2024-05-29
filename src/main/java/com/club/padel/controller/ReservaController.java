@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.club.padel.constant.ClubPadelConstant;
 import com.club.padel.model.Reserva;
 import com.club.padel.service.ReservaService;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @RestController
 @RequestMapping(ClubPadelConstant.APP_PREFIX+"/reservas")
@@ -25,6 +28,37 @@ public class ReservaController {
     @Autowired
     private ReservaService reservaService;
 
+    @GetMapping("")
+    public ResponseEntity<List<Reserva>> obtenerReservas() {
+        try {
+            List<Reserva> reservas = reservaService.obtenerReservas();
+            return ResponseEntity.ok(reservas);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Reserva>> obtenerReservasPorFecha(@RequestParam("fecha") String fecha) {
+        try {
+            LocalDate fechaReserva = LocalDate.parse(fecha);
+            List<Reserva> reservas = reservaService.obtenerReservasPorFecha(fechaReserva);
+            return ResponseEntity.ok(reservas);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @GetMapping("/usuario/{username}")
+    public ResponseEntity<List<Reserva>> obtenerReservasPorUsuario(@PathVariable String username) {
+        try {
+            List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(username);
+            return ResponseEntity.ok(reservas);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
     @PostMapping
     public ResponseEntity<Reserva> crearReserva(@RequestBody ReservaRequest reservaRequest) {
         try {
@@ -50,24 +84,21 @@ public class ReservaController {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @GetMapping("/usuario/{username}")
-    public ResponseEntity<List<Reserva>> obtenerReservasPorUsuario(@PathVariable String username) {
-        try {
-            List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(username);
-            return ResponseEntity.ok(reservas);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 }
 
 class ReservaRequest {
     private Long usuarioId;
     private String username;
     private Long pistaId;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate fechaReserva;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horaInicio;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime horaFin;
 	public Long getUsuarioId() {
 		return usuarioId;

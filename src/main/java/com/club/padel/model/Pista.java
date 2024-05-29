@@ -16,7 +16,7 @@ public class Pista {
     private String nombre;
 
     @Column(nullable = false)
-    private String ubicacion;
+    private Ubicacion ubicacion;
 
 	public Long getId() {
 		return id;
@@ -34,13 +34,12 @@ public class Pista {
 		this.nombre = nombre;
 	}
 
-	public String getUbicacion() {
+	public Ubicacion getUbicacion() {
 		return ubicacion;
 	}
 
-	public void setUbicacion(String ubicacion) {
+	public void setUbicacion(Ubicacion ubicacion) {
 		this.ubicacion = ubicacion;
 	}
 
-    // Getters y setters
 }

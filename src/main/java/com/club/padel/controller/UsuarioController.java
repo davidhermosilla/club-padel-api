@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.club.padel.constant.ClubPadelConstant;
@@ -52,6 +53,18 @@ public class UsuarioController {
 				throw new ClubPadelException(HttpStatus.NOT_FOUND,ExceptionErrorDetail.NOT_FOUND, e.getMessage());
 			}
     }
+    
+    @GetMapping("/buscar")
+    public UsuarioResponse obtenerUsuarioPorNombre(@RequestParam("username") String userName) throws ClubPadelException {
+            try {
+            	Usuario usuario=usuarioService.obtenerUsuario(userName);
+            	UsuarioResponse usuarioResponse = new UsuarioResponse(usuario);
+				return usuarioResponse;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new ClubPadelException(HttpStatus.NOT_FOUND,ExceptionErrorDetail.NOT_FOUND, e.getMessage());
+			}
+    }    
     
     @PostMapping
     public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequest usuarioRequest) {

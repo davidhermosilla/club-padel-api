@@ -64,6 +64,11 @@ public class UsuarioService {
         return usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new Exception("Usuario no encontrado"));
     }
+    
+    public Usuario obtenerUsuario(String username) throws Exception {
+        return usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new Exception("Usuario no encontrado"));
+    }    
 
 	public List<Usuario> listAll() {
 		List<Usuario> usuarios = new ArrayList<Usuario>();

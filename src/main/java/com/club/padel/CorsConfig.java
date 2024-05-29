@@ -13,5 +13,17 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins("*") // Permite el acceso desde este origen
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos HTTP permitidos
                 .allowedHeaders("*"); // Cabeceras permitidas
+        registry.addMapping("/club-padel/reservas/**") // Especifica el path de tu API
+        .allowedOrigins("*") // Permite el acceso desde este origen
+        .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos HTTP permitidos
+        .allowedHeaders("*"); // Cabeceras permitidas
+        registry.addMapping("/club-padel/roles/**") // Especifica el path de tu API
+        .allowedOrigins("*") // Permite el acceso desde este origen
+        .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos HTTP permitidos
+        .allowedHeaders("*"); // Cabeceras permitidas
+        registry.addMapping("/club-padel/usuarios/**") // Especifica el path de tu API
+        .allowedOrigins("*") // Permite el acceso desde este origen
+        .allowedMethods("GET", "POST", "PUT", "DELETE") // Métodos HTTP permitidos
+        .allowedHeaders("*"); // Cabeceras permitidas
     }
 }

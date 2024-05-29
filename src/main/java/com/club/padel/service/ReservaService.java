@@ -69,4 +69,12 @@ public class ReservaService {
         Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow(() -> new Exception("Usuario no encontrado"));
         return reservaRepository.findByUsuario(usuario);
     }
+
+	public List<Reserva> obtenerReservas() {
+		return reservaRepository.findAll();
+	}
+	
+	public List<Reserva> obtenerReservasPorFecha(LocalDate fecha) {
+        return reservaRepository.findByFechaReserva(fecha);
+    }
 }
