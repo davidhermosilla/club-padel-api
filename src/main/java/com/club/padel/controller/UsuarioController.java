@@ -67,40 +67,28 @@ public class UsuarioController {
     }    
     
     @PostMapping
-    public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequest usuarioRequest) {
-        try {
-            Usuario usuario = usuarioService.crearUsuario(
-                    usuarioRequest.getUsername(),
-                    usuarioRequest.getRolId()
-            );
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<Usuario> crearUsuario(@RequestBody UsuarioRequest usuarioRequest) throws Exception {
+        Usuario usuario = usuarioService.crearUsuario(
+                usuarioRequest.getUsername(),
+                usuarioRequest.getRolId()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @DeleteMapping("/{usuarioId}")
-    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long usuarioId) {
-        try {
-            usuarioService.eliminarUsuario(usuarioId);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> eliminarUsuario(@PathVariable Long usuarioId) throws Exception {
+        usuarioService.eliminarUsuario(usuarioId);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{usuarioId}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long usuarioId, @RequestBody UsuarioRequest usuarioRequest) {
-        try {
-            Usuario usuario = usuarioService.actualizarUsuario(
-                    usuarioId,
-                    usuarioRequest.getUsername(),
-                    usuarioRequest.getRolId()
-            );
-            return ResponseEntity.ok(usuario);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
-        }
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long usuarioId, @RequestBody UsuarioRequest usuarioRequest) throws Exception {
+        Usuario usuario = usuarioService.actualizarUsuario(
+                usuarioId,
+                usuarioRequest.getUsername(),
+                usuarioRequest.getRolId()
+        );
+        return ResponseEntity.ok(usuario);
     }
 }
 

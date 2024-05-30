@@ -54,12 +54,8 @@ public class PistaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Pista> get(@PathVariable Long id) {
-        try {
         	Pista pista = pistaService.getPistas(id);
             return new ResponseEntity<Pista>(pista, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Pista>(HttpStatus.NOT_FOUND);
-        }
     }
     
     @PostMapping("/")
@@ -76,7 +72,6 @@ public class PistaController {
     
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody PistaRequest pistaRequest, @PathVariable Long id) {
-        try {
         	Pista pista = new Pista();
         	
         	pista.setNombre(pistaRequest.getNombre());
@@ -84,9 +79,6 @@ public class PistaController {
             pista.setId(id);
             pistaService.savePistas(pista);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
     }
     
     @DeleteMapping("/{id}")

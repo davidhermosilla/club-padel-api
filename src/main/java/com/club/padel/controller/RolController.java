@@ -48,18 +48,13 @@ public class RolController {
     public List<Rol> list() {
     	log.info("List");
     	List<Rol> list = rolesService.listAll();
-    	System.out.println(list);
     	return list;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Rol> get(@PathVariable Long id) {
-        try {
-            Rol rol = rolesService.getRoles(id);
-            return new ResponseEntity<Rol>(rol, HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<Rol>(HttpStatus.NOT_FOUND);
-        }
+        Rol rol = rolesService.getRoles(id);
+        return new ResponseEntity<Rol>(rol, HttpStatus.OK);
     }
     
     @PostMapping("/")
@@ -76,17 +71,13 @@ public class RolController {
     
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody RolRequest rolRequest, @PathVariable Long id) {
-        try {
-        	Rol rol = new Rol();
-        	
-        	rol.setNombre(rolRequest.getNombre());
-        	rol.setDiasAntelacion(rolRequest.getDiasAntelacion());
-            rol.setId(id);
-            rolesService.saveRoles(rol);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    	Rol rol = new Rol();
+    	
+    	rol.setNombre(rolRequest.getNombre());
+    	rol.setDiasAntelacion(rolRequest.getDiasAntelacion());
+        rol.setId(id);
+        rolesService.saveRoles(rol);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @DeleteMapping("/{id}")

@@ -30,33 +30,21 @@ public class ReservaController {
 
     @GetMapping("")
     public ResponseEntity<List<Reserva>> obtenerReservas() {
-        try {
-            List<Reserva> reservas = reservaService.obtenerReservas();
-            return ResponseEntity.ok(reservas);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+        List<Reserva> reservas = reservaService.obtenerReservas();
+        return ResponseEntity.ok(reservas);
     }
 
     @GetMapping("/buscar")
     public ResponseEntity<List<Reserva>> obtenerReservasPorFecha(@RequestParam("fecha") String fecha) {
-        try {
-            LocalDate fechaReserva = LocalDate.parse(fecha);
-            List<Reserva> reservas = reservaService.obtenerReservasPorFecha(fechaReserva);
-            return ResponseEntity.ok(reservas);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        }
+        LocalDate fechaReserva = LocalDate.parse(fecha);
+        List<Reserva> reservas = reservaService.obtenerReservasPorFecha(fechaReserva);
+        return ResponseEntity.ok(reservas);
     }
     
     @GetMapping("/usuario/{username}")
-    public ResponseEntity<List<Reserva>> obtenerReservasPorUsuario(@PathVariable String username) {
-        try {
-            List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(username);
-            return ResponseEntity.ok(reservas);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<Reserva>> obtenerReservasPorUsuario(@PathVariable String username) throws Exception {
+        List<Reserva> reservas = reservaService.obtenerReservasPorUsuario(username);
+        return ResponseEntity.ok(reservas);
     }
     
     @PostMapping
@@ -72,13 +60,9 @@ public class ReservaController {
     }
    
     @DeleteMapping("/{reservaId}")
-    public ResponseEntity<Void> eliminarReserva(@PathVariable Long reservaId) {
-        try {
+    public ResponseEntity<Void> eliminarReserva(@PathVariable Long reservaId) throws Exception {
             reservaService.eliminarReserva(reservaId);
             return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
     }
 
 }
